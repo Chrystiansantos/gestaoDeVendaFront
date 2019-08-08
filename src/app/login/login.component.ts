@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   public entrar(): void {
     this.loginService.validarUsuario(this.usuario);
   }
+  //dentro do login ele ira validar e dar um navigate para a rota home
   ngOnInit() {
   }
 }

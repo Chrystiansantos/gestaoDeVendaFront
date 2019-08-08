@@ -6,7 +6,6 @@ import { CanActivate } from '@angular/router';
 @Injectable()
 export class LoginService implements CanActivate {
     constructor(private httpCliente: HttpClient) { }
-
     public validarUsuario(usuario) {
         console.log(usuario)
     }

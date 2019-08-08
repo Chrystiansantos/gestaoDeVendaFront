@@ -13,6 +13,7 @@ import { ProdutoComponent } from './produto/produto.component';
 import { HomeComponent } from './home/home.component';
 //ROTAS
 import { ROUTES } from '../app/Rotas/app.routes';
+import { PagamentoComponent } from './pagamento/pagamento.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +22,7 @@ import { ROUTES } from '../app/Rotas/app.routes';
     UsuarioComponent,
     ProdutoComponent,
     HomeComponent,
+    PagamentoComponent,
   ],
   imports: [
     BrowserModule,
