@@ -62,10 +62,7 @@
   </div>
   <br>
   <br>
-  <div class="row" *ngIf="mostrarBotaoCompra">
-    <div class="col-sm-9"></div>
-    <div class="col-sm-3">
-      <input type="submit" value="Cadastrar venda" class="btn btn-primary pull-right">
-    </div>
+  <div class="row" *ngIf="!mostrarBotaoCompra">
+      <input type="submit" value="Cadastrar venda" class="btn btn-primary">
   </div>
 </div>
