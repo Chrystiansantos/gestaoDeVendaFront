@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { ClienteService } from '../services/cliente.service';
 import { ProdutoService } from '../services/produto.service';
 import { Produto } from 'src/shared/produto.model';
@@ -24,6 +24,7 @@ export class VendaComponent implements OnInit {
   public clientes: Cliente[];
   //onde irei armazenar os produtos a mostrar na tablela
   public listaProdutos: Produto[] = [];
+  public mostrarBotaoCompra: boolean;
   public idCliente: string;
   public produtoSelecionado: FormGroup = new FormGroup({
     'clienteId': new FormControl('Clientes'),
@@ -33,6 +34,7 @@ export class VendaComponent implements OnInit {
   ngOnInit() {
     this.carregarProdutosEClientes();
   }
+
   public carregarProdutosEClientes(): void {
     this.clienteService.getClientes().subscribe((result: Cliente[]) => {
       this.clientes = result;
@@ -73,6 +75,7 @@ export class VendaComponent implements OnInit {
         a++;
       }
     }
+    this.verificarBotao();
   }
   public diminuirProduto(produtoId: string) {
     for (let x = 0; x < this.listaProdutos.length; x++) {
@@ -80,8 +83,10 @@ export class VendaComponent implements OnInit {
         this.listaProdutos[x].qtd--;
       }
     }
+    this.verificarBotao();
   }
   public aumentarProduto(produtoId: string) {
+    console.log(this.mostrarBotaoCompra);
     let produtos;
     for (let x = 0; x < this.produtos.length; x++) {
       if (this.produtos[x]._id == produtoId) {
@@ -93,6 +98,7 @@ export class VendaComponent implements OnInit {
         this.listaProdutos[y].qtd++;
       }
     }
+    this.verificarBotao();
   }
   removerProduto(produtoId: string) {
     let x = 0
@@ -102,5 +108,10 @@ export class VendaComponent implements OnInit {
       }
       x++;
     }
+    this.verificarBotao();
   }
+  verificarBotao() {
+    (this.listaProdutos.length > 0) ? this.mostrarBotaoCompra = true : this.mostrarBotaoCompra = false;
+  }
+
 }
