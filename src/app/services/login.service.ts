@@ -3,15 +3,26 @@ import { Injectable } from '@angular/core';
 import { URL_API } from '../API/app.api';
 import { CanActivate } from '@angular/router';
 
-@Injectable()
+@Injectable({
+    providedIn: "root"
+})
 export class LoginService implements CanActivate {
     constructor(private httpCliente: HttpClient) { }
+    public url: string = `${URL_API}/usuarioValido`
+    private logado: boolean = true;
     public validarUsuario(usuario) {
-        console.log(usuario)
+        return this.httpCliente.post(this.url, usuario)
+    }
+    setLogado(): void {
+        this.logado = true;
+    }
+    setDeslogado(): void {
+        this.logado = false;
     }
     canActivate(): boolean {
         //se o usuario estiver autenticado ira retornar true caso contrario false
         //pois aqui ira autorizar acessar outras rotas
-        return true;
+        console.log('ola can actionvate', this.logado)
+        return this.logado;
     }
 }

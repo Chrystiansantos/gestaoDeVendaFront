@@ -2,3 +2,15 @@
     margin-top: 2.5%;
     margin-bottom: 2.5%;
 }
+
+.form-check {
+    margin-top: -3px;
+}
+
+tr {
+    text-align: center
+}
+
+.alerta {
+    margin-top: 10px;
+}

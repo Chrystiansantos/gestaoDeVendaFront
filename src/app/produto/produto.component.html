@@ -1,3 +1,161 @@
-<p>
-  produto works!
-</p>
+<div class="container">
+  <!-- AQUI IREI COLOCAR OS ALERTAS  -->
+  <div class="alert alert-primary" role="alert" *ngIf="respostaBoolean == true">
+    {{msgRetorno}}
+  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="respostaBoolean == false">
+    {{msgRetorno}}
+  </div>
+
+  <div *ngIf="telaCadastro;else editarProduto">
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand">Cadastrar produto</a>
+    </nav>
+    <form class="form" [formGroup]="produto" novalidate (ngSubmit)="cadastrarProduto()">
+      <div class="form-row">
+        <div class="col-md-3">
+          <label for="codigo">Código</label>
+          <input type="text" class="form-control" id="codigo" placeholder="Informe o código" min="0" required
+            formControlName="codigo">
+        </div>
+        <div class="col-md-3">
+          <label for="marca">Marca</label>
+          <input type="text" class="form-control" id="marca" placeholder="Informe a marca" required
+            formControlName="marca">
+        </div>
+        <div class="col-md-3">
+          <label for="modelo">Modelo</label>
+          <input type="text" class="form-control" id="modelo" placeholder="Informe o model'o" required
+            formControlName="modelo">
+        </div>
+        <div class="col-md-3">
+          <label for="cor">Cor</label>
+          <input type="text" class="form-control" id="cor" placeholder="Informe a cor" required formControlName="cor">
+        </div>
+      </div>
+      <br>
+      <div class="form-row">
+        <div class="col-md-3">
+          <label for="preco">Preco</label>
+          <input type="number" class="form-control" id="preco" placeholder="Informe o valor R$" min="0" required
+            formControlName="preco">
+        </div>
+        <div class="col-md-3">
+          <label for="tamanho">Tamanho</label>
+          <input type="text" class="form-control" id="tamanho" placeholder="Informe o tamanho" required
+            formControlName="tamanho">
+        </div>
+        <div class="col-md-3">
+          <label for="quantidade">Quantidade</label>
+          <input type="number" class="form-control" id="quantidadde" placeholder="Informe a quantiade" min="0" required
+            formControlName="qtd">
+        </div>
+        <div class="col-md-3">
+          <label for="descricao">Descrição</label>
+          <input type="text" class="form-control" id="descricao" placeholder="Informe a descrição" required
+            formControlName="descricao">
+        </div>
+      </div>
+      <br>
+      <br>
+      <button class="btn btn-primary" type="submit">Cadastrar produto</button>
+      <button class="btn btn-link" type="button" (click)="limparProduto()">Limpar</button>
+    </form>
+  </div>
+
+  <ng-template #editarProduto>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand">Editar Produto</a>
+    </nav>
+    <form class="form" [formGroup]="produto" novalidate (ngSubmit)="editarProdutos()">
+      <div class=" form-row">
+        <div class="col-md-3">
+          <label for="codigo">Código</label>
+          <input type="text" class="form-control" id="codigo" placeholder="Informe o código" min="0" required
+            formControlName="codigo">
+        </div>
+        <div class="col-md-3">
+          <label for="marca">Marca</label>
+          <input type="text" class="form-control" id="marca" placeholder="Informe a marca" required
+            formControlName="marca">
+        </div>
+        <div class="col-md-3">
+          <label for="modelo">Modelo</label>
+          <input type="text" class="form-control" id="modelo" placeholder="Informe o model'o" required
+            formControlName="modelo">
+        </div>
+        <div class="col-md-3">
+          <label for="cor">Cor</label>
+          <input type="text" class="form-control" id="cor" placeholder="Informe a cor" required formControlName="cor">
+        </div>
+      </div>
+      <br>
+      <div class="form-row">
+        <div class="col-md-3">
+          <label for="preco">Preco</label>
+          <input type="number" class="form-control" id="preco" placeholder="Informe o valor R$" min="0" required
+            formControlName="preco">
+        </div>
+        <div class="col-md-3">
+          <label for="tamanho">Tamanho</label>
+          <input type="text" class="form-control" id="tamanho" placeholder="Informe o tamanho" required
+            formControlName="tamanho">
+        </div>
+        <div class="col-md-3">
+          <label for="quantidade">Quantidade</label>
+          <input type="number" class="form-control" id="quantidadde" placeholder="Informe a quantiade" min="0" required
+            formControlName="qtd">
+        </div>
+        <div class="col-md-3">
+          <label for="descricao">Descrição</label>
+          <input type="text" class="form-control" id="descricao" placeholder="Informe a descrição" required
+            formControlName="descricao">
+        </div>
+      </div>
+      <br>
+      <br>
+      <button class="btn btn-primary" type="submit">Editar produto</button>
+      <button class="btn btn-link" type="button" (click)="cancelar()">Cancelar</button>
+    </form>
+  </ng-template>
+
+  <br>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand">Clientes cadastrados</a>
+  </nav>
+  <br>
+  <!-- Tablea de clientes -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Código</th>
+        <th scope="col">Marca</th>
+        <th scope="col">Modelo</th>
+        <th scope="col">Cor</th>
+        <th scope="col">Preço</th>
+        <th scope="col">Tamanho</th>
+        <th scope="col">Quantidade</th>
+        <th scope="col">Deletar/Editar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let produto of produtosCadastrados">
+        <th scope="row">{{produto.codigo}}</th>
+        <td>{{produto.marca}}</td>
+        <td>{{produto.modelo}}</td>
+        <td>{{produto.cor}}</td>
+        <td>{{produto.preco}}</td>
+        <td>{{produto.tamanho}}</td>
+        <td>{{produto.qtd}}</td>
+        <td>
+          <a (click)="carregarProdutoEditar(produto)">
+            <fa-icon [icon]="faEdit"></fa-icon>
+          </a> /
+          <a (click)="deletarProduto(produto)">
+            <fa-icon [icon]="faTrash"></fa-icon>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

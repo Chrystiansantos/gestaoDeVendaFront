@@ -3,5 +3,5 @@
     <app-home></app-home>
 </div>
 <div *ngIf="!usuarioLogado">
-    <app-login></app-login>
+    <app-login (logado)="usuarioEstaLogado($event)"></app-login>
 </div>

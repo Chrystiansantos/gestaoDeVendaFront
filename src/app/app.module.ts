@@ -6,14 +6,17 @@ import { RouterModule, Router } from '@angular/router'
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { LoginService } from './services/login.service';
 import { ClienteComponent } from './cliente/cliente.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { ProdutoComponent } from './produto/produto.component';
 import { HomeComponent } from './home/home.component';
 //ROTAS
-import { ROUTES } from '../app/Rotas/app.routes';
+import { ROUTES } from './rotas/app.routes';
 import { PagamentoComponent } from './pagamento/pagamento.component';
+//FontAwesomeModule
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { VendaComponent } from './venda/venda.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,14 +26,16 @@ import { PagamentoComponent } from './pagamento/pagamento.component';
     ProdutoComponent,
     HomeComponent,
     PagamentoComponent,
+    VendaComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
+    FontAwesomeModule
   ],
-  providers: [LoginService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

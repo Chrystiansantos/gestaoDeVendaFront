@@ -1,0 +1,59 @@
+<div class="container">
+  <form [formGroup]="produtoSelecionado" novalidate (ngSubmit)="cadastrarVenda()">
+    <div class="row justify-content-md-around">
+      <div class="col-sm-8">
+        <label for="clienteNome">Nome do cliente</label>
+        <select class="custom-select" id="clienteNome" formControlName="clienteId">
+          <option selected>Clientes</option>
+          <!-- Aqui irei fazer um ng for para exibir todos os clientes-->
+          <option *ngFor="let cliente  of clientes" value="{{cliente._id}}">
+            {{cliente.nome}} - {{cliente.telefone}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <label for="produtoNome">Nome do produto</label>
+        <select class="custom-select" id="produtoNome" formControlName="produtoId">
+          <option selected>Produtos</option>
+          <!-- Aqui irei fazer um ng for para exibir todos os clientes-->
+          <option *ngFor="let produto  of produtos" value="{{produto._id}}">
+            {{produto.modelo}} / {{produto.marca}} </option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <button type="button" class="btn btn-primary" (click)="inserirProduto()">Inserir produto</button>
+    </div>
+  </form>
+  <br>
+  <div class="row">
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th>Código</th>
+          <th>Marca</th>
+          <th>Modelo</th>
+          <th>Cor</th>
+          <th>Preço</th>
+          <th>Tamanho</th>
+          <th>Quantidade</th>
+          <th>Remover</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let produto of listaProdutos">
+          <td>{{produto.codigo}}</td>
+          <td>{{produto.marca}}</td>
+          <td>{{produto.modelo}}</td>
+          <td>{{produto.cor}}</td>
+          <td>{{produto.preco}}</td>
+          <td>{{produto.tamanho}}</td>
+          <td>{{produto.qtd}}</td>
+          <td>remover</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

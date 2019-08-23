@@ -1,97 +1,206 @@
 <div class="container">
-  <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand">Cadastrar cliente</a>
-  </nav>
-  <div class="form">
-    <!-- <form class="form"> -->
-    <div class="form-row">
-      <div class="col-md-4 mb-3">
-        <label for="validationServer01">First name</label>
-        <input type="text" class="form-control is-valid" id="validationServer01" placeholder="First name" value="Mark"
-          required>
-        <div class="valid-feedback">
-          Looks good!
-        </div>
-      </div>
-      <div class="col-md-4 mb-3">
-        <label for="validationServer02">Last name</label>
-        <input type="text" class="form-control is-valid" id="validationServer02" placeholder="Last name" value="Otto"
-          required>
-        <div class="valid-feedback">
-          Looks good!
-        </div>
-      </div>
-      <div class="col-md-4 mb-3">
-        <label for="validationServerUsername">Username</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroupPrepend3">@</span>
-          </div>
-          <input type="text" class="form-control is-invalid" id="validationServerUsername" placeholder="Username"
-            aria-describedby="inputGroupPrepend3" required>
-          <div class="invalid-feedback">
-            Please choose a username.
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="col-md-6 mb-3">
-        <label for="validationServer03">City</label>
-        <input type="text" class="form-control is-invalid" id="validationServer03" placeholder="City" required>
-        <div class="invalid-feedback">
-          Please provide a valid city.
-        </div>
-      </div>
-      <div class="col-md-3 mb-3">
-        <label for="validationServer04">State</label>
-        <input type="text" class="form-control is-invalid" id="validationServer04" placeholder="State" required>
-        <div class="invalid-feedback">
-          Please provide a valid state.
-        </div>
-      </div>
-      <div class="col-md-3 mb-3">
-        <label for="validationServer05">Zip</label>
-        <input type="text" class="form-control is-invalid" id="validationServer05" placeholder="Zip" required>
-        <div class="invalid-feedback">
-          Please provide a valid zip.
-        </div>
-      </div>
-    </div>
-    <button class="btn btn-primary" type="submit">Submit form</button>
-    <!--  </form> -->
+  <!-- Cadastrar Clientes -->
+  <div class="alert alert-primary" role="alert" *ngIf="respostaBoolean == true">
+    {{msgRetorno}}
   </div>
+  <div class="alert alert-danger" role="alert" *ngIf="respostaBoolean == false">
+    {{msgRetorno}}
+  </div>
+
+  <div *ngIf="!editCliente; else editarCadastro">
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand">Cadastrar cliente</a>
+    </nav>
+    <form class="form" [formGroup]="cliente" novalidate (ngSubmit)="cadastrarCliente()">
+      <div class="form-row">
+        <div class="col-md-3">
+          <label for="nome">Nome</label>
+          <input type="text" class="form-control" id="nome" placeholder="Informe o nome" required
+            formControlName="nome">
+        </div>
+        <div class="col-md-2">
+          <label for="telefone">Telefone</label>
+          <!--is-invalid caso esteja valido irei usar essa classe-->
+          <input type="text" class="form-control is-valid" id="telefone" placeholder="(xx) xxxxx-xxxx" required
+            formControlName="telefone" minlength="11" maxlength="11">
+        </div>
+        <div class="col-md-2">
+          <label for="cpf">CPF</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="cpf" placeholder="xxx.xxx.xxx-xx" formControlName="cpf"
+              aria-describedby="inputGroupPrepend3" required minlength="11" maxlength="11">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="endereco">Endereço</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="endereco" placeholder="Rua"
+              aria-describedby="inputGroupPrepend3" required formControlName="rua">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <label for="masculino">Sexo</label>
+          <!--is-invalid caso esteja valido irei usar essa classe-->
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="sexo" id="masculino" value="masculino" checked
+              formControlName="sexo">
+            <label class="form-check-label" for="masculino">Masculino</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="sexo" id="feminino" value="feminino"
+              formControlName="sexo">
+            <label class="form-check-label" for="feminino">Feminino</label>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="form-row">
+        <div class="col-md-1">
+          <label for="numero">Número</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="numero" placeholder="xxx" aria-describedby="inputGroupPrepend3"
+              required formControlName="numero">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="cidade">Cidade</label>
+          <input type="text" class="form-control" id="cidade" placeholder="Cidade" required formControlName="cidade">
+        </div>
+        <div class="col-md-2">
+          <label for="estado">Estado</label>
+          <select class="custom-select" id="inputGroupSelect01" formControlName="estado">
+            <option selected>Estados</option>
+            <!-- Aqui irei fazer um ng for para exibir todos os estados-->
+            <option *ngFor="let estado of estados" value="{{estado.Sigla}}">
+              {{estado.Nome}}-{{estado.Sigla}}</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="cep">Cep</label>
+          <input type="text" class="form-control" id="cep" placeholder="xxxxxx-xxx" formControlName="cep" required
+            minlength="8" maxlength="8">
+        </div>
+      </div>
+      <br>
+      <button class="btn btn-primary" type="submit">Cadastrar cliente</button>
+      <button class="btn btn-link" type="button" (click)="limparCliente()">Limpar</button>
+    </form>
+  </div>
+  <!-- Editar Clientes -->
+  <ng-template #editarCadastro>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand">Editar cliente</a>
+    </nav>
+    <form class="form" [formGroup]="cliente" novalidate (ngSubmit)="editarCliente()">
+      <div class="form-row">
+        <div class="col-md-3">
+          <label for="nome">Nome</label>
+          <input type="text" class="form-control" id="nome" placeholder="Informe o nome" required
+            formControlName="nome">
+        </div>
+        <div class="col-md-2">
+          <label for="telefone">Telefone</label>
+          <!--is-invalid caso esteja valido irei usar essa classe-->
+          <input type="text" class="form-control is-valid" id="telefone" placeholder="(xx) xxxxx-xxxx" required
+            formControlName="telefone" minlength="11" maxlength="11">
+        </div>
+        <div class="col-md-2">
+          <label for="cpf">CPF</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="cpf" placeholder="xxx.xxx.xxx-xx" formControlName="cpf"
+              aria-describedby="inputGroupPrepend3" required minlength="11" maxlength="11">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="endereco">Endereço</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="endereco" placeholder="Rua"
+              aria-describedby="inputGroupPrepend3" required formControlName="rua">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <label for="feminino">Sexo</label>
+          <!--is-invalid caso esteja valido irei usar essa classe-->
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="sexo" id="masculino" value="masculino" checked
+              formControlName="sexo">
+            <label class="form-check-label" for="masculino">Masculino</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="sexo" id="feminino" value="feminino"
+              formControlName="sexo">
+            <label class="form-check-label" for="feminino">Feminino</label>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="form-row">
+        <div class="col-md-1">
+          <label for="numero">Número</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="numero" placeholder="xxx" aria-describedby="inputGroupPrepend3"
+              required formControlName="numero">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="cidade">Cidade</label>
+          <input type="text" class="form-control" id="cidade" placeholder="Cidade" required formControlName="cidade">
+        </div>
+        <div class="col-md-2">
+          <label for="estado">Estado</label>
+          <select class="custom-select" id="inputGroupSelect01" formControlName="estado">
+            <option selected>Estados</option>
+            <!-- Aqui irei fazer um ng for para exibir todos os estados-->
+            <option *ngFor="let estado of estados" value="{{estado.Sigla}}">
+              {{estado.Nome}}-{{estado.Sigla}}</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="cep">Cep</label>
+          <input type="text" class="form-control" id="cep" placeholder="xxxxxx-xxx" formControlName="cep" required
+            minlength="8" maxlength="8">
+        </div>
+      </div>
+      <br>
+      <button class="btn btn-primary" type="submit">Editar cliente</button>
+      <button class="btn btn-link" type="button" (click)="cancelarEdicao()">Cancelar</button>
+    </form>
+  </ng-template>
+  <!-- Tabela Clientes -->
   <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand">Clientes cadastrados</a>
   </nav>
   <!-- Tablea de clientes -->
-  <table class="table table-striped">
+  <table class="table table-striped table-hover">
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
+        <th scope="col">Nome</th>
+        <th scope="col">CPF</th>
+        <th scope="col">Telefone</th>
+        <th scope="col">Numero</th>
+        <th scope="col">Rua</th>
+        <th scope="col">Cidade</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Deletar/Editar</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
+      <tr *ngFor="let cliente of clientesCadastrados">
+        <th scope="row">{{cliente.nome}}</th>
+        <td>{{cliente.cpf}}</td>
+        <td>{{cliente.telefone}}</td>
+        <td>{{cliente.numero}}</td>
+        <td>{{cliente.endereco}}</td>
+        <td>{{cliente.cidade}}</td>
+        <td>{{cliente.estado}}</td>
+        <td>
+          <a (click)="carregarClieneEditar(cliente)">
+            <fa-icon [icon]="faEdit"></fa-icon>
+          </a> /
+          <a (click)="deletarCliente(cliente)">
+            <fa-icon [icon]="faTrash"></fa-icon>
+          </a>
+        </td>
       </tr>
     </tbody>
   </table>
