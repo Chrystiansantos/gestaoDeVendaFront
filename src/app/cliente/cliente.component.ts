@@ -5,8 +5,7 @@ import { ClienteService } from '../services/cliente.service';
 import { Resposta } from 'src/shared/mensagem';
 import { Cliente } from 'src/shared/cliente.model';
 //icons
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-cliente',

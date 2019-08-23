@@ -4,6 +4,7 @@ import { ProdutoService } from '../services/produto.service';
 import { Produto } from 'src/shared/produto.model';
 import { Cliente } from 'src/shared/cliente.model';
 import { FormGroup, FormControl } from '@angular/forms';
+import { faAngleLeft, faAngleRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-venda',
@@ -14,6 +15,10 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class VendaComponent implements OnInit {
 
   constructor(private clienteService: ClienteService, private produtoService: ProdutoService) { }
+
+  public faAngleLeft = faAngleLeft;
+  public faAngleRight = faAngleRight;
+  public faTrash = faTrash;
 
   public produtos: Produto[];
   public clientes: Cliente[];
@@ -54,20 +59,48 @@ export class VendaComponent implements OnInit {
     }
     //aqui caso tenha inserido irei aumentar a quantidade ou adicionar um novo
     if (produtoJaInserido) {
-      console.log('irei adicionar mais uma na quantidade de produtos')
+      this.aumentarProduto(this.produtoSelecionado.value.produtoId);
     } else {
-      //LOOPING INFINITO AQUI
-      console.log(this.produtos)
       let a = 0;
       while (a < this.produtos.length) {
         if (this.produtos[a]._id == this.produtoSelecionado.value.produtoId) {
-          this.listaProdutos.push(this.produtos[a])
-          let auxPosicao = this.listaProdutos.length
+          this.listaProdutos.push(new Produto(this.produtos[a]._id, this.produtos[a].codigo, this.produtos[a].marca,
+            this.produtos[a].modelo, this.produtos[a].cor, this.produtos[a].preco, this.produtos[a].tamanho,
+            this.produtos[a].qtd, this.produtos[a].descricao));
+          let auxPosicao = this.listaProdutos.length;
           this.listaProdutos[auxPosicao - 1].qtd = 1;
         }
         a++;
       }
     }
-    console.log(this.listaProdutos);
+  }
+  public diminuirProduto(produtoId: string) {
+    for (let x = 0; x < this.listaProdutos.length; x++) {
+      if (this.listaProdutos[x]._id == produtoId && this.listaProdutos[x].qtd > 1) {
+        this.listaProdutos[x].qtd--;
+      }
+    }
+  }
+  public aumentarProduto(produtoId: string) {
+    let produtos;
+    for (let x = 0; x < this.produtos.length; x++) {
+      if (this.produtos[x]._id == produtoId) {
+        produtos = this.produtos[x];
+      }
+    }
+    for (let y = 0; y < this.listaProdutos.length; y++) {
+      if (this.listaProdutos[y]._id == produtoId && produtos.qtd > this.listaProdutos[y].qtd) {
+        this.listaProdutos[y].qtd++;
+      }
+    }
+  }
+  removerProduto(produtoId: string) {
+    let x = 0
+    while (x < this.listaProdutos.length) {
+      if (this.listaProdutos[x]._id = produtoId) {
+        this.listaProdutos.splice(x);
+      }
+      x++;
+    }
   }
 }
