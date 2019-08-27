@@ -9,7 +9,7 @@ import { CanActivate } from '@angular/router';
 export class LoginService implements CanActivate {
     constructor(private httpCliente: HttpClient) { }
     public url: string = `${URL_API}/usuarioValido`
-    private logado: boolean = true;
+    private logado: boolean = false;
     public validarUsuario(usuario) {
         return this.httpCliente.post(this.url, usuario)
     }

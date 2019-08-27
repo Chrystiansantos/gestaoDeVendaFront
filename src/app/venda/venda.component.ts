@@ -5,16 +5,18 @@ import { Produto } from 'src/shared/produto.model';
 import { Cliente } from 'src/shared/cliente.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { faAngleLeft, faAngleRight, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { VendaService } from '../services/venda.service';
+import { Venda } from 'src/shared/venda.model';
 
 @Component({
   selector: 'app-venda',
   templateUrl: './venda.component.html',
   styleUrls: ['./venda.component.css'],
-  providers: [ClienteService, ProdutoService]
+  providers: [ClienteService, ProdutoService, VendaService]
 })
 export class VendaComponent implements OnInit {
 
-  constructor(private clienteService: ClienteService, private produtoService: ProdutoService) { }
+  constructor(private clienteService: ClienteService, private produtoService: ProdutoService, private vendaService: VendaService) { }
 
   public faAngleLeft = faAngleLeft;
   public faAngleRight = faAngleRight;
@@ -25,11 +27,13 @@ export class VendaComponent implements OnInit {
   //onde irei armazenar os produtos a mostrar na tablela
   public listaProdutos: Produto[] = [];
   public mostrarBotaoCompra: boolean;
+  public desabilitarBotaoCompra: boolean = true;
   public idCliente: string;
   public produtoSelecionado: FormGroup = new FormGroup({
     'clienteId': new FormControl('Clientes'),
     'produtoId': new FormControl('Produtos')
   })
+
 
   ngOnInit() {
     this.carregarProdutosEClientes();
@@ -86,7 +90,6 @@ export class VendaComponent implements OnInit {
     this.verificarBotao();
   }
   public aumentarProduto(produtoId: string) {
-    console.log(this.mostrarBotaoCompra);
     let produtos;
     for (let x = 0; x < this.produtos.length; x++) {
       if (this.produtos[x]._id == produtoId) {
@@ -104,14 +107,28 @@ export class VendaComponent implements OnInit {
     let x = 0
     while (x < this.listaProdutos.length) {
       if (this.listaProdutos[x]._id = produtoId) {
-        this.listaProdutos.splice(x);
+        console.log(this.listaProdutos)
+
+        this.listaProdutos.splice(x, 1);
       }
       x++;
     }
     this.verificarBotao();
+
   }
   verificarBotao() {
     (this.listaProdutos.length > 0) ? this.mostrarBotaoCompra = true : this.mostrarBotaoCompra = false;
+    (this.produtoSelecionado.value.clienteId !== 'Clientes') ? this.desabilitarBotaoCompra = false : this.desabilitarBotaoCompra = true;
+  }
+  public cadastrarVenda(): void {
+    console.log('ops')
+    this.verificarBotao();
+    this.vendaService.cadastrarVenda(new Venda(this.produtoSelecionado.value.clienteId, this.listaProdutos))
+      .subscribe(result => {
+        console.log(result)
+      }, err => {
+        console.log(err)
+      });
   }
 
 }

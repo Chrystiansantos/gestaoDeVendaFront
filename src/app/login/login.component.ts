@@ -7,7 +7,6 @@ import { Resposta } from 'src/shared/mensagem';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [LoginService]
 })
 export class LoginComponent implements OnInit, OnChanges {
   public resposta: Resposta;

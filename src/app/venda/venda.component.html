@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="produtoSelecionado" novalidate (ngSubmit)="cadastrarVenda()">
+  <form [formGroup]="produtoSelecionado" novalidate>
     <div class="row justify-content-md-around">
       <div class="col-sm-8">
         <label for="clienteNome">Nome do cliente</label>
@@ -62,7 +62,8 @@
   </div>
   <br>
   <br>
-  <div class="row" *ngIf="!mostrarBotaoCompra">
-      <input type="submit" value="Cadastrar venda" class="btn btn-primary">
+  <div class="row" *ngIf="mostrarBotaoCompra">
+    <input type="submit" value="Cadastrar venda" (click)="cadastrarVenda()" class="btn btn-primary"
+      [disabled]="desabilitarBotaoCompra">
   </div>
 </div>
