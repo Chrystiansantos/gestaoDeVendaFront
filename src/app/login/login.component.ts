@@ -8,7 +8,7 @@ import { Resposta } from 'src/shared/mensagem';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit, OnChanges {
+export class LoginComponent implements OnInit {
   public resposta: Resposta;
   constructor(private loginService: LoginService) { }
   @Output() logado = new EventEmitter();
@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit, OnChanges {
 
   public entrar(): void {
     this.loginService.validarUsuario(this.usuario.value).subscribe((result: Resposta) => {
+      console.log(result)
       if (result.logado) {
         this.loginService.setLogado();
         this.loginService.canActivate();
@@ -34,8 +35,5 @@ export class LoginComponent implements OnInit, OnChanges {
     setInterval(() => {
       this.botaoDesabilitado = (this.usuario.get('senha').valid && this.usuario.get('login').valid) ? false : true;
     }, 1000);
-  }
-  ngOnChanges() {
-    console.log(this.botaoDesabilitado)
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { URL_API } from '../API/app.api';
 import { Cliente } from 'src/shared/cliente.model';
-import { Observable } from 'rxjs';
+
 @Injectable()
 export class ClienteService {
     constructor(private httpClient: HttpClient) { }

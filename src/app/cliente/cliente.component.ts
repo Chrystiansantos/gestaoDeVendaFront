@@ -26,7 +26,7 @@ export class ClienteComponent implements OnInit {
   //estados vindos do mock
   private estados = estados;
 
-  public clientesCadastrados: Cliente[];
+  public clientesCadastrados: Cliente[] = [];
   //fazer as validações de cliente
   private cliente: FormGroup = new FormGroup({
     'nome': new FormControl(null),
@@ -144,8 +144,9 @@ export class ClienteComponent implements OnInit {
     })
   }
   carregarClientes() {
-    this.clienteService.getClientes().subscribe((result: Cliente[]) => {
+    this.clienteService.getClientes().subscribe((result: any/* Cliente[] */) => {
       this.clientesCadastrados = result;
+      console.log(result);
     }, (err: Resposta) => {
       if (err.message == "Http failure response for http://localhost:8080/cliente: 0 Unknown Error") {
         this.respostaBoolean = false;
